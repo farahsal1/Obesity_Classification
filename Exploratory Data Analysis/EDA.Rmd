@@ -1,0 +1,134 @@
+---
+title: "Obesity_classification"
+author: "Farah Salahuddin"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dataset Description and Exploratory Analysis
+
+  The dataset obtained from UC Irvine Machine Learning Repository is called ‘Estimation of Obesity Levels Based on Eating Habits and Physical Condition’. The dataset consists of 2111 unique observations and 17 attributes that are as follows:
+Gender, Age, Height, Weight, Family History, if the person eats high caloric food frequently, if the person eats vegetables in meals, number of meals in a day, if the individual eats between meals, smoking, amount of water intake, frequency of physical activity, time on technological devices, frequency of alcohol intake and mode of transportation. Out of these, some are numeric variables for example age, weight and height, while others are categorical variables such as gender, smoking and transportation. 
+
+The relationship between the predictor variables and the response variable, obesity level was studied.
+
+```{r}
+
+library(ggcorrplot)
+library(ggplot2)
+library(gridExtra)
+library(pls)
+library(glmnet)
+library(MASS)
+library(leaps)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(rpart)
+library(randomForest)
+library(caret)
+library(gbm)
+library(adabag)
+
+```
+
+
+
+
+```{r}
+url <- "https://archive.ics.uci.edu/static/public/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition.zip"
+temp_zip <- tempfile(fileext = ".zip")
+download.file(url, temp_zip, mode = "wb")
+
+
+```
+
+
+
+
+
+```{r}
+unzip_dir <- tempdir()
+unzip(temp_zip, exdir = unzip_dir)
+
+
+```
+
+
+```{r}
+list.files(unzip_dir)
+file_path <- file.path(unzip_dir, "ObesityDataSet_raw_and_data_sinthetic.csv")
+obesity <- read.table(file_path,sep=",",header=TRUE)
+
+
+```
+
+```{r}
+head(obesity)
+
+```
+
+
+```{r}
+obesity$Gender=factor(obesity$Gender)
+obesity$family_history_with_overweight=factor(obesity$family_history_with_overweight)
+obesity$FAVC=factor(obesity$FAVC) #high caloric food
+obesity$FCVC=factor(obesity$FCVC) #vegetables
+obesity$CAEC=factor(obesity$CAEC) #eat any food between meals
+obesity$SMOKE=factor(obesity$SMOKE)
+obesity$SCC=factor(obesity$SCC) #monitor calories you eat
+obesity$CALC=factor(obesity$CALC) #alcohol
+obesity$MTRANS=factor(obesity$MTRANS) #transportation
+obesity$NObeyesdad=factor(obesity$NObeyesdad)
+
+```
+
+
+```{r}
+colnames_predictors=c("Gender","family_history_with_overweight","FAVC","FCVC","CAEC","SMOKE","SCC","CALC","MTRANS")
+colnames_pred_num=c("Age","Height","Weight","NCP","FAF")
+
+data_long <- obesity %>%
+  pivot_longer(cols = colnames_pred_num, names_to = "Variable", values_to = "Value")
+
+head(data_long)
+
+ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II")), y = Age, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(fill='Obesity Level',title = "Distribution of Age by Obesity Category", x = "Obesity Category", y = "Age")
+
+
+
+ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II")), y = Weight, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(fill='Obesity Level',title = "Distribution of Weight by Obesity Category", x = "Obesity Category", y = "Weight")
+
+
+ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II")), y = Height, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(fill='Obesity Level', title = "Distribution of Weight by Obesity Category", x = "Obesity Category", y = "Height")
+
+ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II")), y = NCP, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(fill='Obesity Level',title = "Distribution of Weight by Obesity Category", x = "Obesity Category", y = "Number of meals eating per day")
+
+
+ggplot(obesity, aes(x = MTRANS, fill =NObeyesdad)) +
+  geom_bar(position = "fill") +  # "fill" makes proportions (100% stacked)
+  labs(fill='Obesity Level',
+       title = "Obesity Category by Mode of Transportation", 
+       x = "Mode of Transportation", 
+       y = "Proportion") +
+  theme_minimal() 
+  #theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+```
