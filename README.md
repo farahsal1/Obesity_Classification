@@ -5,8 +5,8 @@ The response variable Obesity Level is a multi-class categorical variable with s
 All models are optimized via hyperparameter tuning. After collecting robust results from each of these methods, I evaluate and compare each model to determine which model performs best.
 
 
-
+<p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/08482a26-e50a-4b72-908d-a301d2b9d953" />
-
+</p>
 
 
