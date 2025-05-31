@@ -14,6 +14,6 @@ All models are optimized via hyperparameter tuning. After collecting robust resu
 
 
 <p align="center">
-  <img src="Images/Obesity by age" alt="Chart" width="500"/>
+  <img src="Images/Obesity by age.png" alt="Chart" width="500"/>
 </p>
 
