@@ -20,3 +20,9 @@ The number of records across each category are fairly similar, showing that ther
   <img src="Images/Obesity by age.png" alt="Chart" width="500"/>
 </p>
 
+
+
+<p align="center">
+  <img src="Images/Physical Activity and obesity.png" alt="Chart" width="500"/>
+</p>
+
