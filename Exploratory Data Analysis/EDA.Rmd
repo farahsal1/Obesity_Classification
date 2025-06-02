@@ -32,7 +32,7 @@ library(randomForest)
 library(caret)
 library(gbm)
 library(adabag)
-
+library(patchwork)
 ```
 
 
@@ -151,8 +151,8 @@ ggplot(obesity, aes(x = MTRANS, fill =NObeyesdad)) +
        title = "Relationship between Mode of transportation frequently used and obesity level", 
        x = "Mode of Transportation", 
        y = "Proportion") +
-  theme_minimal() 
-  #theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 
@@ -164,19 +164,45 @@ ggplot(obesity, aes(x = MTRANS, fill =NObeyesdad)) +
 
 colnames_predictors=c("Gender","family_history_with_overweight","FAVC","FCVC","CAEC","SMOKE","SCC","CALC","MTRANS")
 
-plots<-list()
-for (cat_var in colnames_predictors) {
-  plots[[cat_var]]<-ggplot(obesity, aes_string(x=cat_var,fill=obesity$NObeyesdad)) +
+
+p1<-ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II","Obesity_Type_III")), y = Age, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position="none",axis.text.x = element_text(angle =45, hjust = 1)) +
+  labs(fill='Obesity Level', x = "Obesity Category", y = "Age")
+
+
+
+p2<-ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II","Obesity_Type_III")), y = Height, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position="none",axis.text.x = element_text(angle =45, hjust = 1)) +
+  labs(fill='Obesity Level', x = "Obesity Category", y = "Height")
+
+
+p3<-ggplot(obesity, aes(x = MTRANS, fill =NObeyesdad)) +
+  geom_bar(position = "fill") +  # "fill" makes proportions (100% stacked)
+  labs(fill='Obesity Level',
+       #title = "Relationship between Mode of transportation frequently used and obesity level", 
+       x = "Mode of Transportation", 
+       y = "Proportion") +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p4<-ggplot(obesity, aes_string(x=obesity$FAF,fill=obesity$NObeyesdad)) +
     geom_bar(position="fill") +
     scale_fill_brewer(palette="Set2") +
-    labs(x=cat_var, y="NObeyedad") + 
+    labs(fill="Obesity Level",
+         #title="Relationship between physical activity and obesity",
+         x="Frequency of Physical Activity", y="Obesity Levels") + 
+    scale_x_discrete(labels=c("0"="Never","1"="1 to 2 days","2"="2 to 4 days","3"="4 to 5 days")) +
     theme_minimal() +
-    theme(legend.position="none",axis.text.x = element_text(angle = 45, hjust = 1))
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
   
-}
 
+(p1 | p2) / (p3 | p4)
 
-do.call(grid.arrange, c(plots, ncol = 2)) 
+#do.call(grid.arrange, c(plots, ncol = 2)) 
 
 #title("Relationship between obesity level and different categorical feature variables")
 

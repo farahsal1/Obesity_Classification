@@ -188,14 +188,14 @@ unzip(temp_zip, exdir = unzip_dir)
 list.files(unzip_dir)
 ```
 
-    ## [1] "file569827956a8"                          
-    ## [2] "file56985e1e1ff7"                         
-    ## [3] "file569863d24d24"                         
-    ## [4] "file56986dbb4b43"                         
-    ## [5] "file56986ea23fe8.zip"                     
-    ## [6] "file56987a44586b"                         
+    ## [1] "file64742255f1a"                          
+    ## [2] "file64745b3c88c"                          
+    ## [3] "file647470145aa6"                         
+    ## [4] "file647472183e04.zip"                     
+    ## [5] "file647475a041ae"                         
+    ## [6] "file6474b6b39c6"                          
     ## [7] "ObesityDataSet_raw_and_data_sinthetic.csv"
-    ## [8] "rgl56982d497b9d"
+    ## [8] "rgl64742b20436"
 
 ``` r
 file_path <- file.path(unzip_dir, "ObesityDataSet_raw_and_data_sinthetic.csv")
@@ -346,28 +346,59 @@ ggplot(obesity, aes(x = MTRANS, fill =NObeyesdad)) +
        title = "Relationship between Mode of transportation frequently used and obesity level", 
        x = "Mode of Transportation", 
        y = "Proportion") +
-  theme_minimal() 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 ![](EDA_files/figure-gfm/unnamed-chunk-8-5.png)<!-- -->
 
 ``` r
-  #theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-``` r
 colnames_predictors=c("Gender","family_history_with_overweight","FAVC","FCVC","CAEC","SMOKE","SCC","CALC","MTRANS")
 
-plots<-list()
-for (cat_var in colnames_predictors) {
-  plots[[cat_var]]<-ggplot(obesity, aes_string(x=cat_var,fill=obesity$NObeyesdad)) +
+
+par(mfrow = c(2, 2))
+ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II","Obesity_Type_III")), y = Age, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position="none",axis.text.x = element_text(angle =45, hjust = 1)) +
+  labs(fill='Obesity Level', x = "Obesity Category", y = "Age")
+```
+
+![](EDA_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+ggplot(obesity, aes(x = factor(NObeyesdad, levels = c("Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II","Obesity_Type_I","Obesity_Type_II","Obesity_Type_III")), y = Height, fill = NObeyesdad)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position="none",axis.text.x = element_text(angle =45, hjust = 1)) +
+  labs(fill='Obesity Level', x = "Obesity Category", y = "Height")
+```
+
+![](EDA_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
+
+``` r
+ggplot(obesity, aes(x = MTRANS, fill =NObeyesdad)) +
+  geom_bar(position = "fill") +  # "fill" makes proportions (100% stacked)
+  labs(fill='Obesity Level',
+       #title = "Relationship between Mode of transportation frequently used and obesity level", 
+       x = "Mode of Transportation", 
+       y = "Proportion") +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+![](EDA_files/figure-gfm/unnamed-chunk-9-3.png)<!-- -->
+
+``` r
+ggplot(obesity, aes_string(x=obesity$FAF,fill=obesity$NObeyesdad)) +
     geom_bar(position="fill") +
     scale_fill_brewer(palette="Set2") +
-    labs(x=cat_var, y="NObeyedad") + 
+    labs(fill="Obesity Level",
+         #title="Relationship between physical activity and obesity",
+         x="Frequency of Physical Activity", y="Obesity Levels") + 
+    scale_x_discrete(labels=c("0"="Never","1"="1 to 2 days","2"="2 to 4 days","3"="4 to 5 days")) +
     theme_minimal() +
-    theme(legend.position="none",axis.text.x = element_text(angle = 45, hjust = 1))
-  
-}
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
     ## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
@@ -377,13 +408,11 @@ for (cat_var in colnames_predictors) {
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
-``` r
-do.call(grid.arrange, c(plots, ncol = 2)) 
-```
-
-![](EDA_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](EDA_files/figure-gfm/unnamed-chunk-9-4.png)<!-- -->
 
 ``` r
+#do.call(grid.arrange, c(plots, ncol = 2)) 
+
 #title("Relationship between obesity level and different categorical feature variables")
 ```
 
