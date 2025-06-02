@@ -92,6 +92,19 @@ obesity$CALC=factor(obesity$CALC) #alcohol
 obesity$MTRANS=factor(obesity$MTRANS) #transportation
 obesity$NObeyesdad=factor(obesity$NObeyesdad)
 
+
+
+obesity$TUE=factor(obesity$TUE) #Tech use
+obesity$TUE=round(as.numeric(levels(obesity$TUE)[obesity$TUE]))
+obesity$TUE=factor(obesity$TUE) #tech use
+
+
+
+obesity$CH2O=factor(obesity$CH2O) #Water
+obesity$CH2O=round(as.numeric(levels(obesity$CH2O)[obesity$CH2O]))
+obesity$CH2O=factor(obesity$CH2O) #water
+
+
 ```
 
 
@@ -221,3 +234,157 @@ ggplot(obesity, aes_string(x=obesity$FAF,fill=obesity$NObeyesdad)) +
   
 
 ```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$TUE,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between technology use and obesity",x="Technology Use", y="Obesity Levels") + 
+    scale_x_discrete(labels=c("0"="0-2 hours","1"="3-5 hours","2"="More than 5 hours")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$CALC,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between alcohol and obesity",x="Alcohol consumption", y="Obesity Levels") + 
+  #  scale_x_discrete(labels=c("0"="0-2 hours","1"="3-5 hours","2"="More than 5 hours")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$CH2O,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between water intake and obesity",x="Water intake", y="Obesity Levels") + 
+    scale_x_discrete(labels=c("1"="Less than a liter","2"="Between 1 and 2L","3"="More than 2L")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$FCVC,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between vegetable intake in meals and obesity",x="vegetables intake in meals", y="Obesity Levels") + 
+    scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$FCVC,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between vegetable intake in meals and obesity",x="vegetables intake in meals", y="Obesity Levels") + 
+    scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$Gender,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between Gender and obesity",x="Gender", y="Obesity Levels") + 
+ #   scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$family_history_with_overweight,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between Family History and obesity",x="Family History with Overweight", y="Obesity Levels") + 
+ #   scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$FAVC,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between eating high caloric food and obesity",x="Eating High Caloric Food Frequently", y="Obesity Levels") + 
+ #   scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$CAEC,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between eating food between meals and obesity",x="Eating Food between meals", y="Obesity Levels") + 
+ #   scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+
+
+```{r}
+
+ggplot(obesity, aes_string(x=obesity$SCC,fill=obesity$NObeyesdad)) +
+    geom_bar(position="fill") +
+    scale_fill_brewer(palette="Set2") +
+    labs(fill="Obesity Level",title="Relationship between monitoring calories and obesity",x="Monitoring calories", y="Obesity Levels") + 
+ #   scale_x_discrete(labels=c("1"="Never","2"="Sometimes","3"="Always")) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+

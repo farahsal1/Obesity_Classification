@@ -5,26 +5,187 @@ date: "2025-06-01"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+
+library(ggcorrplot)
+library(ggplot2)
+library(gridExtra)
+library(pls)
+library(glmnet)
+library(MASS)
+library(leaps)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(rpart)
+library(randomForest)
+library(caret)
+library(gbm)
+library(adabag)
+library(patchwork)
+
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+
+```{r}
+url <- "https://archive.ics.uci.edu/static/public/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition.zip"
+temp_zip <- tempfile(fileext = ".zip")
+download.file(url, temp_zip, mode = "wb")
+
+unzip_dir <- tempdir()
+unzip(temp_zip, exdir = unzip_dir)
+
+list.files(unzip_dir)
+file_path <- file.path(unzip_dir, "ObesityDataSet_raw_and_data_sinthetic.csv")
+obesity <- read.table(file_path,sep=",",header=TRUE)
+
+
 ```
 
-## Including Plots
+```{r}
+obesity$Gender=factor(obesity$Gender)
+obesity$family_history_with_overweight=factor(obesity$family_history_with_overweight)
+obesity$FAVC=factor(obesity$FAVC) #high caloric food
+obesity$FCVC=factor(obesity$FCVC) #vegetables
+obesity$FCVC=round(as.numeric(levels(obesity$FCVC)[obesity$FCVC]))
+obesity$FCVC=factor(obesity$FCVC) #vegetables
 
-You can also embed plots, for example:
+obesity$FAF=factor(obesity$FAF) #physical activity
+obesity$FAF=round(as.numeric(levels(obesity$FAF)[obesity$FAF]))
+obesity$FAF=factor(obesity$FAF) #physical activity
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+obesity$CAEC=factor(obesity$CAEC) #eat any food between meals
+obesity$SMOKE=factor(obesity$SMOKE)
+obesity$SCC=factor(obesity$SCC) #monitor calories you eat
+obesity$CALC=factor(obesity$CALC) #alcohol
+obesity$MTRANS=factor(obesity$MTRANS) #transportation
+obesity$NObeyesdad=factor(obesity$NObeyesdad)
+
+
+
+obesity$TUE=factor(obesity$TUE) #Tech use
+obesity$TUE=round(as.numeric(levels(obesity$TUE)[obesity$TUE]))
+obesity$TUE=factor(obesity$TUE) #tech use
+
+
+
+obesity$CH2O=factor(obesity$CH2O) #Water
+obesity$CH2O=round(as.numeric(levels(obesity$CH2O)[obesity$CH2O]))
+obesity$CH2O=factor(obesity$CH2O) #water
+
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r}
+
+head(obesity)
+
+```
+High relationship: Age, Height, Number of Meals per day (NCP), physical activity (FAF),MTRANS (mode of transportation), Gender (females Obesity Type III), family history with overweight, eating high caloric food (FAVC), eating food between meals (CAEC), 
+
+Moderate: Tech use, water intake, veggie intake *opposite results), monitoring calories
+
+Low relationship/poor data: alcohol consumption, smoke, 
+
+
+
+Based on Exploratory data analysis, we take only the features with high relationship with obesity levels.
+
+First we subset the data to contain only relevant features
+```{r}
+
+#final_data=subset(obesity, select = c(Gender,Age,Height, family_history_with_overweight, FAF,MTRANS,FAVC,CAEC, NCP,NObeyesdad))
+
+final_data=subset(obesity,select=-Weight)
+
+#splitting into train and test
+final_data$random_var <- runif(nrow(final_data))  # Generate a random variable
+train <- final_data[final_data$random_var <= 0.8, ]  # 80% for training
+test <- final_data[final_data$random_var > 0.8, ]   # 20% for testing
+
+train<-subset(train,select=-c(random_var))
+test<-subset(test,select=-c(random_var))
+
+
+```
+
+Random Forest Classifier
+
+```{r}
+
+rf1<-randomForest(NObeyesdad~.,train,importance=TRUE)
+importance(rf1)
+varImpPlot(rf1,sort=TRUE, main="Importance of feature variables in random forest", pch=16)
+p1<-rf1$predicted
+confusionMatrix(p1,train$NObeyesdad)
+
+
+
+
+```
+
+
+```{r}
+p2<-predict(rf1,test)
+confusionMatrix(p2,test$NObeyesdad)
+
+
+```
+
+
+
+Boosting
+
+```{r}
+
+gbm_obesity<-gbm(NObeyesdad~., data=train,distribution="multinomial",n.trees = 5000,  
+                 interaction.depth = 5,  
+                 shrinkage = 0.1,  
+                 cv.folds = 10,  # 10-fold cross-validation
+                 verbose = FALSE)
+
+perf_gbm1=gbm.perf(gbm_obesity, method="cv")
+
+
+```
+
+
+```{r}
+
+summary(gbm_obesity,plotit=TRUE)
+title ('Influence of different features in boosting method')
+
+
+```
+
+```{r}
+pred_probs <- predict(gbm_obesity, newdata = train, n.trees = perf_gbm1, type = "response")
+pred_class <- apply(pred_probs, 1, function(x) colnames(pred_probs)[which.max(x)])
+pred_class <- factor(pred_class, levels = levels(train$NObeyesdad))
+true_class <- factor(train$NObeyesdad)
+confusionMatrix(pred_class,true_class)
+
+```
+
+
+
+```{r}
+
+pred_probs_test<-predict(gbm_obesity,newdata=test,n.trees=perf_gbm1, type="response")
+pred_class_test<-apply(pred_probs_test,1,function(x) colnames(pred_probs_test)[which.max(x)])
+pred_class_test<-factor(pred_class_test, levels=levels(test$NObeyesdad))
+true_class_test<-factor(test$NObeyesdad)
+confusionMatrix(pred_class_test,true_class_test)
+
+
+
+```
+
+
+
