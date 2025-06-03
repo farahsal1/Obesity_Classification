@@ -42,7 +42,7 @@ Random forest is a machine learning algorithm that uses multiple decision trees,
 
 Boosting is a machine learning technique that involves combining the predictive power of weak learner classifiers to reduce the overall error rate of prediction. Boosting achieves this by taking the errors from one weak learner and training a different weak learner on data where the misclassified observations are given more weight. In this manner, the multiple weak learners train on the errors from other learners, resulting in overall reduced error. 
 
-
+## Results
 
 <p align="center">
   <img src="Images/CM_RF.png" alt="Chart" width="500"/>
@@ -52,3 +52,7 @@ Boosting is a machine learning technique that involves combining the predictive 
 <p align="center">
   <img src="Images/CM_GB.png" alt="Chart" width="500"/>
 </p>
+
+
+
+## Key Takeaways
