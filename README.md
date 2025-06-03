@@ -26,3 +26,5 @@ The number of records across each category are fairly similar, showing that ther
   <img src="Images/Physical Activity and obesity.png" alt="Chart" width="500"/>
 </p>
 
+
+Based on the exploratory data analysis, age, height, gender, family history with overweight, number of meals per day (NCP), physical activity (FAF), mode of transportation used frequently (MTRANS), eating high caloric food (FAVC) and eating between meals (CAEC) all appear to have at least a moderate relationship with obesity levels. Comparatively, water intake, alcohol use, technology/screen use, smoking, monitoring calories and consumption of vegetables have a weak relationship with obesity levels. I therefore dropped them from my models.
