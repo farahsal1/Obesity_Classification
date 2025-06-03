@@ -117,6 +117,10 @@ test<-subset(test,select=-c(random_var))
 
 Random Forest Classifier
 
+Random forest is a machine learning algorithm that uses multiple decision trees, each trained on a different subset of data, to classify each observation. By using information from many trees instead of one, random forest minimizes variance, and increases the robustness of the prediction, using majority vote of different decision trees on each observation. To apply random forest in R, I have used the RandomForest package. The number of trees I have used is 500.
+
+Random Forest classifier has an accuracy of 87.02% on the training set, and 85.82% on the test set.
+
 ```{r}
 
 rf1<-randomForest(NObeyesdad~.,train,importance=TRUE)
@@ -133,14 +137,41 @@ confusionMatrix(p1,train$NObeyesdad)
 
 ```{r}
 p2<-predict(rf1,test)
-confusionMatrix(p2,test$NObeyesdad)
+cm_rf=confusionMatrix(p2,test$NObeyesdad, mode="prec_recall")
+
+cm_rf
+
+```
+
+
+```{r}
+
+levelplot(cm_rf$table,xlab = "Actual", col.regions= colorRampPalette(c("lightblue","purple","magenta"))(100),
+          ylab = "Predicted",
+          main = "Confusion Matrix - Random Forest",
+          panel = function(x, y, z, ...) {
+            panel.levelplot(x, y, z, ...)
+            panel.text(x, y, labels = round(z), cex = 1.2, col="white")
+            
+          },
+      scales = list(x = list(rot = 45)), 
+          par.settings = list(
+    axis.text = list(cex = 0.7),     # Shrink tick labels
+    par.main.text = list(cex = 1),   # Title size (optional)
+    par.xlab.text = list(cex = 0.9), # x-axis label
+    par.ylab.text = list(cex = 0.9)  # y-axis label
+  ))
+
 
 
 ```
 
 
-
 Boosting
+
+
+For the boosting algorithm, I used 10-fold cross validation and a parameter tuning of 5000 trees, and a shrinkage factor of 0.01. The performance of the model on the training set gives 99.53 accuracy. However, on the test set, it only has an accuracy of 85.34%, suggesting that there may be overfitting to the training set.
+
 
 ```{r}
 
@@ -181,11 +212,41 @@ pred_probs_test<-predict(gbm_obesity,newdata=test,n.trees=perf_gbm1, type="respo
 pred_class_test<-apply(pred_probs_test,1,function(x) colnames(pred_probs_test)[which.max(x)])
 pred_class_test<-factor(pred_class_test, levels=levels(test$NObeyesdad))
 true_class_test<-factor(test$NObeyesdad)
-confusionMatrix(pred_class_test,true_class_test)
+cm<-confusionMatrix(pred_class_test,true_class_test)
 
 
 
 ```
 
+```{r}
 
+cm<-confusionMatrix(pred_class_test,true_class_test,mode = "prec_recall")
 
+cm$table
+
+cm
+
+```
+```{r}
+
+#rgb.palette <- colorRampPalette(c("blue", "yellow"), space = "lab")
+
+levelplot(cm$table,xlab = "Actual", col.regions= colorRampPalette(c("lightblue","purple","magenta"))(100),
+          ylab = "Predicted",
+          main = "Confusion Matrix - Gradient Boosting",
+          panel = function(x, y, z, ...) {
+            panel.levelplot(x, y, z, ...)
+            panel.text(x, y, labels = round(z), cex = 1.2, col="white")
+            
+          },
+      scales = list(x = list(rot = 45)), 
+          par.settings = list(
+    axis.text = list(cex = 0.7),     # Shrink tick labels
+    par.main.text = list(cex = 1),   # Title size (optional)
+    par.xlab.text = list(cex = 0.9), # x-axis label
+    par.ylab.text = list(cex = 0.9)  # y-axis label
+  ))
+
+```
+
+```
