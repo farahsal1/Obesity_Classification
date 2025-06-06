@@ -46,7 +46,7 @@ Random Forest classifier has an accuracy of 87.02% on the training set, and 85.2
 
 
 <p align="center">
-  <img src="Images/CM_RF.PNG" alt="Chart" width="600"/>
+  <img src="Images/CM_RF.PNG" alt="Chart" width="500"/>
 </p>
 
 
