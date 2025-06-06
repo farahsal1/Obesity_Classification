@@ -60,7 +60,7 @@ When we look at gradient boosting, we see a training accuracy of 96.17% and a te
 </p>
 
 
-The feature importance plot for random forest indicates that overall, physical features are more significant predictors of obesity compared to the behavioral variables selected. Age, height and gender all have greater influence in determining the accuracy of the model compared to mode of transport used frequently (MTRANS), engaging in physical activity (FAF), and eating high caloric food (FAVC). 
+The feature importance plot for random forest indicates that overall, age, gender, number of meals eaten in a day (NCP), vegetable consumption in meals (FCVC), drinking alcohol (CALC), and eating between meals play a significant role in explaining the obesity level of a person. While age and gender are physical features, the rest are behavioral factors that are linked to obesity. Smoking and monitoring calories (SCC) both have a very small impact on obesity levels.
 
 <p align="center">
   <img src="Images/feature_importance.png" alt="Chart" width="600"/>
