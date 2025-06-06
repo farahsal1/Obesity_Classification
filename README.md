@@ -25,7 +25,7 @@ The following two charts show the relationship of the obesity levels class with 
 </p>
 
 
-Based on the exploratory data analysis, age, height, gender, family history with overweight, number of meals per day (NCP), physical activity (FAF), mode of transportation used frequently (MTRANS), eating high caloric food (FAVC) and eating between meals (CAEC) all appear to have at least a moderate relationship with obesity levels. Comparatively, water intake, alcohol use, technology/screen use, smoking, monitoring calories and consumption of vegetables have a weak relationship with obesity levels. I therefore dropped them from my models.
+Based on the exploratory data analysis, weight, age, height, gender, family history with overweight, number of meals per day (NCP), physical activity (FAF), mode of transportation used frequently (MTRANS), eating high caloric food (FAVC) and eating between meals (CAEC) all appear to have at least a moderate relationship with obesity levels. Comparatively, water intake, alcohol use, technology/screen use, smoking, monitoring calories and consumption of vegetables have a weak relationship with obesity levels. I therefore dropped them from my models.
 
 Since the class variables are based on body mass index (BMI), which itself is derived from weight and height measurements, I have removed those two features from the model.
 
@@ -43,7 +43,7 @@ Boosting is a machine learning technique that involves combining the predictive 
 
 ## Results
 
-Random Forest classifier has an accuracy of 87.02% on the training set, and 82.89% on the test set. If we look at the test confusion matrix below, we can see that the model performs very well for Obesity levels Type I, II and III. It has some trouble classifying Overweight level I category, for which some of the records are misclassified as Normal weight, a category adjacent to it in increasing order of BMI. Obesity Level I, II and III have class accuracy of 94.75%, 97.69% and 98.91% respectively. Insufficient weight also has a high accuracy of 94.82%. However, normal weight, and overweight level I and II have test accuracy of 84.6%, 83.6% and 85.83%. This goes to show that given the behavioral and physical features selected, the model can pretty accurately distinguish between extreme cases of BMI (being obese or underweight). However, it doesn't perform as well on relatively mid-range values.
+Random Forest classifier has an accuracy of 87.02% on the training set, and 82.89% on the test set. If we look at the test confusion matrix below, we can see that the model performs very well for Obesity levels Types II and III and Insufficient Weight. It has some trouble classifying other levels, especially normal weight that has a class accuracy of 79.6% and a precision of only 68.75%. Overweight levels I and II, and obesity level I have class accuracy of 86.0%, 84.8% and 88.70% respectively. This goes to show that given the behavioral and physical features selected, the model can pretty accurately distinguish between extreme cases of BMI (being obese or underweight). However, it doesn't perform as well on relatively mid-range values. A lot of misclassifications are in adjacent categories, for example, most of overweight Level I misclassification is either as normal weight or obesity level I, showing that the model does come close to categorizing to a relatively closer BMI level, rather than misclassifying to a completely different level of weight. None of the records with obesity Type I, II or III are misclassified as insufficient weight.
 
 
 <p align="center">
