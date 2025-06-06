@@ -100,9 +100,9 @@ Based on Exploratory data analysis, we take only the features with high relation
 First we subset the data to contain only relevant features
 ```{r}
 
-#final_data=subset(obesity, select = c(Gender,Age,Height, family_history_with_overweight, FAF,MTRANS,FAVC,CAEC, NCP,NObeyesdad))
+final_data=subset(obesity, select = c(Gender,Age,Height, family_history_with_overweight, FAF,MTRANS,FAVC,CAEC, NCP,NObeyesdad))
 
-final_data=subset(obesity,select=-Weight)
+#final_data=subset(obesity,select=-Weight)
 
 #splitting into train and test
 final_data$random_var <- runif(nrow(final_data))  # Generate a random variable
@@ -249,4 +249,6 @@ levelplot(cm$table,xlab = "Predicted", col.regions= colorRampPalette(c("lightblu
 
 ```
 
+```{r}
+summary(gbm_obesity)
 ```
