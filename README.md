@@ -42,15 +42,17 @@ Boosting is a machine learning technique that involves combining the predictive 
 
 ## Results
 
-Random Forest classifier has an accuracy of 87.02% on the training set, and 85.27% on the test set. If we look at the test confusion matrix below, we can see that the model performs very well for Obesity levels Type I, II and III. It has some trouble classifying normal weight records, where some of the records are misclassified as Overweight Level I, which is a category adjacent to it. Obesity Level I, II and III have class accuracy of 94.75%, 97.69% and 98.91% respectively. Insufficient weight also has a high accuracy of 94.82%. However, normal weight, and overweight level I and II have test accuracy of 84.6%, 83.6% and 85.83%. This goes to show that given the behavioral and physical features selected, the model can pretty accurately distinguish between extreme cases of BMI (being obese or underweight). However, it doesn't perform as well on relatively mid-range values.
+Random Forest classifier has an accuracy of 87.02% on the training set, and 85.27% on the test set. If we look at the test confusion matrix below, we can see that the model performs very well for Obesity levels Type I, II and III. It has some trouble classifying Overweight level I category, for which some of the records are misclassified as Normal weight, a category adjacent to it in increasing order of BMI. Obesity Level I, II and III have class accuracy of 94.75%, 97.69% and 98.91% respectively. Insufficient weight also has a high accuracy of 94.82%. However, normal weight, and overweight level I and II have test accuracy of 84.6%, 83.6% and 85.83%. This goes to show that given the behavioral and physical features selected, the model can pretty accurately distinguish between extreme cases of BMI (being obese or underweight). However, it doesn't perform as well on relatively mid-range values.
 
 
 <p align="center">
-  <img src="Images/CM_RF.PNG" alt="Chart" width="600"/>
+  <img src="Images/CM_RF.PNG" alt="Chart" width="500"/>
 </p>
 
 
-When we look at gradient boosting, we see a training accuracy of 99.53% and a test accuracy of 81.4%, showing a case of model overfitting to the training data. Looking at the confusion matrix below, we can see slightly lower performance of the model on obesity type I, II and III 
+When we look at gradient boosting, we see a training accuracy of 99.53% and a test accuracy of 81.4%, showing a case of model overfitting to the training data. Looking at the confusion matrix below, we can see lower performance of the model on obesity types I And II. While Obesity Type III retains the accuracy level of 98.9%, the performace for obesity types I and II is much lower compared to random forest at 89.5% and 93.3% respectively. This contributes to the overall decrease in accuracy for the gradient boosting model.
+
+
 
 
 <p align="center">
