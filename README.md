@@ -73,9 +73,9 @@ Another thing to note is that there are several classes of response variables in
 
 ## Key Takeaways
 
-Overall, random forest model had a higher performance compared to gradient boosting in classifying obesity level on the given data, using physical and behavioral features. 
+Overall, random forest model had a slgiht higher overall performance compared to gradient boosting in classifying obesity level on the given data, using physical and behavioral features. Also, given the high overfitting of the gradient boosting model to the training data, it is not the best choice for using on new observations.
 
-While physical features more significantly explained the difference in different BMI level classes in the response variable, we can conduct more research using slightly different methods to determine the impact of behavioral features as well:
+We can conduct more research using slightly different methods to determine the impact of behavioral features as well:
 
 1. Merge the seven classes into 3 or 4 broad categories: insufficient weight, normal weight, overweight and obese. By eliminating the need to capture variation between different overweight and obesity classes, this may help the model pick up the variation between the broader categories.
 2. We can complement this study with models on based on non-survey data, for example, data obtained through fitness trackers and food recording apps may give a more accurate picture of a person's day-to-day behaviors and may reduce bias that comes from self-reporting these values.
