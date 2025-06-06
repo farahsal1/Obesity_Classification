@@ -51,8 +51,7 @@ Random Forest classifier has an accuracy of 87.02% on the training set, and 82.8
 </p>
 
 
-When we look at gradient boosting, we see a training accuracy of 96.17% and a test accuracy of 80.24%, showing a case of model overfitting to the training data. Looking at the confusion matrix below, we can see lower performance of the model on obesity types II And III. While Obesity Type I retains the accuracy level of 98.9%, the performace for obesity types I and II is much lower compared to random forest at 89.5% and 93.3% respectively. This contributes to the overall decrease in accuracy for the gradient boosting model.
-
+When we look at gradient boosting, we see a training accuracy of 96.17% and a test accuracy of 80.24%, suggesting a classic case of model overfitting to the training data. Looking at the confusion matrix below, we can see performance similar to random forest for most all categories, albeit slightly lower in terms of accuracy. Obesity types II And III have high class accuracies at 95.5% and 100% respectively. One key difference from the classification of random forest is that the misclassification is more random: There are 4 instances of insufficient weight that Gradient Boosting is classifying as Obesity Type I, as compared to 0 in the random forest outcome. 
 
 
 
