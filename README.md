@@ -6,13 +6,13 @@ The response variable Obesity Level is a multi-class categorical variable with s
 
 ## Exploratory Data Analysis
 
-The number of records across each category are fairly similar, showing that there is no class imbalance issue.
+First, we look at the number of records for each class of the response variable. As we can see, the frequency of occurrence of each class is fairly similiar, suggesting no class imbalance issues that need to be addressed. The data also has no missing values. 
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/08482a26-e50a-4b72-908d-a301d2b9d953" />
 </p>
 
-
+The following two charts show the relationship of the obesity levels class with age and physical activity. Other features including height, smoking, eating frequency between meals, caloric intake were also studied, and can be accessed in the Github repository for this project under the Images section. 
 
 <p align="center">
   <img src="Images/Obesity by age.png" alt="Chart" width="500"/>
@@ -30,7 +30,7 @@ Based on the exploratory data analysis, age, height, gender, family history with
 
 ## Methodology
 
-The data was first split into train and test set using an 80:20 split. Using the training set, I applied two ensemble methods: random forest and boosting to predict the obesity level. 
+The data was first split into train and test set using an 80:20 split. Using the training set, I have applied two ensemble methods: random forest and boosting to predict the obesity levels using the selected features, that I then evaluate based on the performance on test set. 
 
 ### Random Forest:
 
