@@ -9,7 +9,7 @@ The response variable Obesity Level is a multi-class categorical variable with s
 The number of records across each category are fairly similar, showing that there is no class imbalance issue.
 
 <p align="center">
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/08482a26-e50a-4b72-908d-a301d2b9d953" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/08482a26-e50a-4b72-908d-a301d2b9d953" />
 </p>
 
 
