@@ -146,8 +146,8 @@ cm_rf
 
 ```{r}
 
-levelplot(cm_rf$table,xlab = "Actual", col.regions= colorRampPalette(c("lightblue","purple","magenta"))(100),
-          ylab = "Predicted",
+levelplot(cm_rf$table,xlab = "Predicted", col.regions= colorRampPalette(c("lightblue","purple","magenta"))(100),
+          ylab = "Actual",
           main = "Confusion Matrix - Random Forest",
           panel = function(x, y, z, ...) {
             panel.levelplot(x, y, z, ...)
@@ -231,8 +231,8 @@ cm
 
 #rgb.palette <- colorRampPalette(c("blue", "yellow"), space = "lab")
 
-levelplot(cm$table,xlab = "Actual", col.regions= colorRampPalette(c("lightblue","purple","magenta"))(100),
-          ylab = "Predicted",
+levelplot(cm$table,xlab = "Predicted", col.regions= colorRampPalette(c("lightblue","purple","magenta"))(100),
+          ylab = "Actual",
           main = "Confusion Matrix - Gradient Boosting",
           panel = function(x, y, z, ...) {
             panel.levelplot(x, y, z, ...)
