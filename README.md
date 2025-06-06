@@ -60,5 +60,24 @@ When we look at gradient boosting, we see a training accuracy of 99.53% and a te
 </p>
 
 
+The feature importance plot for random forest indicates that overall, physical features are more significant predictors of obesity compared to the behavioral variables selected. Age, height and gender all have greater influence in determining the accuracy of the model compared to mode of transport used frequently (MTRANS), engaging in physical activity (FAF), and eating high caloric food (FAVC) 
+
+<p align="center">
+  <img src="Images/feature_importance.PNG" alt="Chart" width="500"/>
+</p>
+
+We can hypothesize that since the data is based on survey and the answers are self-reported, data pertaining to behavioral factors may not be as reliable compared to the physical characteristics (age, height and gender). This may be contributing to poor performance of these features in determining obesity across the board. 
+
+Another thing to note is that there are several classes of response variables in this problem - some behavioral variables may be effective in distinguishing between broader classes, but not as effective in determining the differences across all 5 classes. For example, we saw in exploratory data analysis earlier that people who are normal weight are highly represented in category of people exercising 4 to 5 days a week. However, both overweight classes are represented in all physical activity levels, so the model may not use this feature to determine those classes in particular.
+
 
 ## Key Takeaways
+
+Overall, random forest model had a higher performance compared to gradient boosting in classifying obesity level on the given data, using physical and behavioral features. 
+
+While physical features more significantly explained the difference in different BMI level classes in the response variable, we can conduct more research using slightly different methods to determine the impact of behavioral features as well:
+
+    1. Merge the seven classes into 3 or 4 broad categories: insufficient weight, normal weight, overweight and obese. By eliminating the need to capture variation between different overweight and obesity classes, this may help the model pick up the variation between the broader categories.
+    2. We can complement this study with models on based on non-survey data, for example, data that is gathered in a more controlled experiement where participants are instructed to follow a particular diet plan. However, such a research is subject to availability of such data.
+
+
