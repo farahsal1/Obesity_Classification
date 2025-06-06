@@ -77,7 +77,6 @@ Overall, random forest model had a higher performance compared to gradient boost
 
 While physical features more significantly explained the difference in different BMI level classes in the response variable, we can conduct more research using slightly different methods to determine the impact of behavioral features as well:
 
-    1. Merge the seven classes into 3 or 4 broad categories: insufficient weight, normal weight, overweight and obese. By eliminating the need to capture variation between different overweight and obesity classes, this may help the model pick up the variation between the broader categories.
-    2. We can complement this study with models on based on non-survey data, for example, data that is gathered in a more controlled experiement where participants are instructed to follow a particular diet plan. However, such a research is subject to availability of such data.
-
+1. Merge the seven classes into 3 or 4 broad categories: insufficient weight, normal weight, overweight and obese. By eliminating the need to capture variation between different overweight and obesity classes, this may help the model pick up the variation between the broader categories.
+2. We can complement this study with models on based on non-survey data, for example, data obtained through fitness trackers and food recording apps may give a more accurate picture of a person's day-to-day behaviors and may reduce bias that comes from self-reporting these values.
 
