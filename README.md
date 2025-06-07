@@ -31,7 +31,7 @@ Since the class variables are based on body mass index (BMI), which itself is de
 
 ## Methodology
 
-The data was first split into train and test set using an 80:20 split. Using the training set, I have applied two ensemble methods: random forest and boosting to predict the obesity levels using the selected features, that I then evaluate based on the performance on test set. 
+The data was first split into train and test set using an 80:20 split. Using the training set, I have applied two ensemble methods: random forest and boosting to predict the obesity levels using the selected features, that I then evaluate based on the performance on test set. I picked these two methods because I wanted to compare ensemble approaches in this project. 
 
 ### Random Forest:
 
