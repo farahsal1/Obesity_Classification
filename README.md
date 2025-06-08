@@ -25,9 +25,9 @@ The following two charts show the relationship of the obesity levels class with 
 </p>
 
 
-Based on the exploratory data analysis, weight, age, height, gender, family history with overweight, number of meals per day (NCP), physical activity (FAF), mode of transportation used frequently (MTRANS), eating high caloric food (FAVC) and eating between meals (CAEC) all appear to have at least a moderate relationship with obesity levels. Comparatively, water intake, alcohol use, technology/screen use, smoking, monitoring calories and consumption of vegetables have a weak relationship with obesity levels. I therefore dropped them from my models.
+Based on the exploratory data analysis, weight, age, height, gender, family history with overweight, number of meals per day (NCP), physical activity (FAF), mode of transportation used frequently (MTRANS), eating high caloric food (FAVC) and eating between meals (CAEC) all appear to have at least a moderate relationship with obesity levels. Comparatively, water intake, alcohol use, technology/screen use, smoking, monitoring calories and consumption of vegetables have a weaker relationship with obesity levels. 
 
-Since the class variables are based on body mass index (BMI), which itself is derived from weight and height measurements, I have removed those two features from the model.
+Since the class variables are based on body mass index (BMI), which itself is derived from weight and height measurements, I have removed those two features from the model. However, I have kept all other features in the models to analyze their statistical impact in determining obesity levels.
 
 ## Methodology
 
@@ -51,7 +51,7 @@ Random Forest classifier has an accuracy of 87.02% on the training set, and 82.8
 </p>
 
 
-When we look at gradient boosting, we see a training accuracy of 96.17% and a test accuracy of 80.24%, suggesting a classic case of model overfitting to the training data. Looking at the confusion matrix below, we can see performance similar to random forest for most all categories, albeit slightly lower in terms of accuracy. Obesity types II And III have high class accuracies at 95.5% and 100% respectively. One key difference from the classification of random forest is that the misclassification is more random: There are 4 instances of insufficient weight that Gradient Boosting is classifying as Obesity Type I, as compared to 0 in the random forest outcome. 
+When we look at gradient boosting, we see a training accuracy of 96.17% and a test accuracy of 80.24%, suggesting a classic case of model overfitting to the training data. Looking at the confusion matrix below, we can see performance similar to random forest for most all categories, albeit slightly lower in terms of accuracy. Obesity types II And III have high class accuracies at 95.5% and 100% respectively. One key difference from the classification of random forest is that the misclassification is slightly more random: There are 4 instances of insufficient weight that Gradient Boosting is classifying as Obesity Type I, as compared to 0 in the random forest outcome. 
 
 
 
@@ -68,7 +68,7 @@ The feature importance plot for random forest indicates that overall, age, gende
 
 We can hypothesize that since the data is based on survey and the answers are self-reported, data pertaining to behavioral factors may not be as reliable compared to the physical characteristics (age, height and gender). This may be contributing to poor performance of these features in determining obesity across the board. 
 
-Another thing to note is that there are several classes of response variables in this problem - some behavioral variables may be effective in distinguishing between broader classes, but not as effective in determining the differences across all 5 classes. For example, we saw in exploratory data analysis earlier that people who are normal weight are highly represented in category of people exercising 4 to 5 days a week. However, both overweight classes are represented in all physical activity levels, so the model may not use this feature to determine those classes in particular.
+Another thing to note is that there are several classes of response variables in this problem - some behavioral variables may be effective in distinguishing between broader classes, but not as effective in determining the differences across all 5 classes. For example, we saw in exploratory data analysis earlier that people who are normal weight are highly represented in category of people exercising 4 to 5 days a week. However, both overweight classes are represented in all physical activity levels, so the model may not use this feature to determine those classes in particular. Similarly, vegetable consumption with meals did not appear to have a strong relationship with obesity in our exploratory data analysis, however the variation across all levels was statistically significant per the model.
 
 
 ## Key Takeaways
@@ -79,5 +79,5 @@ We can conduct more research using slightly different methods to determine the i
 
 1. Merge the seven classes into 3 or 4 broad categories: insufficient weight, normal weight, overweight and obese. By eliminating the need to capture variation between different overweight and obesity classes, this may help the model pick up the variation between the broader categories.
 2. We can complement this study with models on based on non-survey data, for example, data obtained through fitness trackers and food recording apps may give a more accurate picture of a person's day-to-day behaviors and may reduce bias that comes from self-reporting these values.
-3. Going to do more feature analysis to understand the impact of the behavorial variables and their statistical significance.
+3. As I continue to further improve upon this analysis, I will do more feature analysis to understand the impact of the behavorial variables and their statistical significance.
 
